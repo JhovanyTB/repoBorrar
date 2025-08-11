@@ -51,7 +51,7 @@ public class TableroKanvanService {
 	
 	public Response insertPromociones(List<TableroVO> obj) {
     	Response response = new Response();
-    	int result = 0;
+    	int result = 1;
     	//Validaciones
     	for(int i = 0; i < obj.size(); i ++) {
     		Map<String, Object> parametros= new LinkedHashMap<>();
@@ -63,10 +63,8 @@ public class TableroKanvanService {
         	parametros.put("p_titulo", obj.get(i).getTitulo());
         	parametros.put("p_url", obj.get(i).getUrl());
         	parametros.put("p_urlImagen", obj.get(i).getUrlImagen());
-        	result = storedProcedureExecutor.exec("insertNoticia", parametros);
-        	if(result < 0) {
-        		break;
-        	}
+        	int aux = storedProcedureExecutor.exec("insertNoticia", parametros);
+        	result = aux <= 0 ? aux : result;
     	}
     	response.setCode(result);
     	if(result > 0) {

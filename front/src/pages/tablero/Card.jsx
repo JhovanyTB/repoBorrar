@@ -44,7 +44,7 @@ const Card = ({ idNoticia, idEstatus, autor, contenido, descripcion, fecha, fuen
             <div className="noticia-card" onClick={handleCardClick} style={{ cursor: 'pointer' }}>
                 <div className="noticia-header">
                     <p>{titulo}</p>
-                    <p className="noticia-fecha">{fecha}</p>
+                    <p className="noticia-fecha">{fecha === '' || fecha === null ? 'Desconocida' : fecha}</p>
                 </div>
             </div>
             <Dialog
@@ -54,7 +54,7 @@ const Card = ({ idNoticia, idEstatus, autor, contenido, descripcion, fecha, fuen
                 style={{ width: '90%', }}
                 modal
             >
-                <p><strong>Fecha:</strong> {fecha}</p>
+                <p><strong>Fecha:</strong> {fecha === '' || fecha === null ? 'Desconocida' : fecha}</p>
                 <p>Autor: {autor}</p>
                 <p>Contenido: {contenido}</p>
                 <img src={urlImagen} style={{ width: '50%', height: 'auto', borderRadius: '6px' }} ></img>
@@ -68,7 +68,7 @@ const Card = ({ idNoticia, idEstatus, autor, contenido, descripcion, fecha, fuen
                                     icon="pi pi-fast-backward"
                                     onClick={() => actualizar(1)}
                                     rounded
-                                    label={'Aprovar'}
+                                    label={'Restaurar'}
                                     className="btn-form-icons"
                                     severity="success"
                                 />

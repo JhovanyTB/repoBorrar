@@ -2,9 +2,10 @@
     position: relative;
     border: 1px solid #ccc;
     border-radius: 6px;
-    padding: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
     background-color: #fff;
-    min-height: 200px;
+    min-height: 160px;
     display: flex;
     flex-direction: column;
     overflow: hidden;

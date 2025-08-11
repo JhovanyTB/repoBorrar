@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { Toast } from 'primereact/toast';
+import { Button } from 'primereact/button';
 
 import '../../styles/Tablero.css';
 
@@ -12,7 +13,7 @@ const Tablero = () => {
     const Service = useMemo(() => new TableroService(), []);
     const toast = useRef(null);
     const [noticias, setNoticias] = useState([]);
-    const [noticiasPendientes, setNoticiasPendientes] = useState({});
+    const [noticiasPendientes, setNoticiasPendientes] = useState([]);
     const [noticiasRevision, setNoticiasRevision] = useState([]);
     const [noticiasCompletadas, setNoticiasCompletadas] = useState([]);
     const [noticiasDescartadas, setNoticiasDescartadas] = useState([]);
@@ -60,7 +61,7 @@ const Tablero = () => {
                 ]);
             } else {
                 toast.current.show([
-                    { severity: 'warn', summary: 'Datos No Guardados', detail: data.message, life: 3000 }
+                    { severity: 'warn', summary: 'Datos No Guardados', detail: "No hay noticias nuevas", life: 3000 }
                 ]);
             }
         }).catch(e => {
@@ -135,10 +136,18 @@ const Tablero = () => {
             <Toast ref={toast} position="top-right" />
             <div className='header'>
                 <h1>Noticias</h1>
-                <button className='buttonUpdate'>Actualizar</button>
+                <Button
+                    icon="pi pi-replay"
+                    onClick={() => fetchNoticias()}
+                    rounded
+                    label={'Actualizar'}
+                    className="btn-form-icons buttonUpdate"
+                    severity="success"
+                />
             </div>
             <div class="container">
                 <div className='block'>
+                    <h2>Pendientes</h2>
                     {noticiasPendientes.map((noticia) => {
                         return (
                             <Card
@@ -146,12 +155,12 @@ const Tablero = () => {
                                 idEstatus={1}
                                 autor={noticia.autor}
                                 contenido={noticia.contenido}
-                                descripcion={noticia.descripcion} 
-                                fecha={noticia.fecha} 
-                                fuente={noticia.fuente} 
-                                titulo={noticia.titulo} 
-                                url={noticia.url} 
-                                urlImagen={noticia.urlImagen} 
+                                descripcion={noticia.descripcion}
+                                fecha={noticia.fecha}
+                                fuente={noticia.fuente}
+                                titulo={noticia.titulo}
+                                url={noticia.url}
+                                urlImagen={noticia.urlImagen}
                                 actualizado={verificar}
                             />
                         );
@@ -159,6 +168,7 @@ const Tablero = () => {
                 </div>
                 <div class="divider"></div>
                 <div className='block'>
+                    <h2>En Revisión</h2>
                     {noticiasRevision.map((noticia) => {
                         return (
                             <Card
@@ -166,12 +176,12 @@ const Tablero = () => {
                                 idEstatus={2}
                                 autor={noticia.autor}
                                 contenido={noticia.contenido}
-                                descripcion={noticia.descripcion} 
-                                fecha={noticia.fecha} 
-                                fuente={noticia.fuente} 
-                                titulo={noticia.titulo} 
-                                url={noticia.url} 
-                                urlImagen={noticia.urlImagen} 
+                                descripcion={noticia.descripcion}
+                                fecha={noticia.fecha}
+                                fuente={noticia.fuente}
+                                titulo={noticia.titulo}
+                                url={noticia.url}
+                                urlImagen={noticia.urlImagen}
                                 actualizado={verificar}
                             />
                         );
@@ -179,6 +189,7 @@ const Tablero = () => {
                 </div>
                 <div class="divider"></div>
                 <div className='block'>
+                    <h2>Completadas</h2>
                     {noticiasCompletadas.map((noticia) => {
                         return (
                             <Card
@@ -186,12 +197,12 @@ const Tablero = () => {
                                 idEstatus={3}
                                 autor={noticia.autor}
                                 contenido={noticia.contenido}
-                                descripcion={noticia.descripcion} 
-                                fecha={noticia.fecha} 
-                                fuente={noticia.fuente} 
-                                titulo={noticia.titulo} 
-                                url={noticia.url} 
-                                urlImagen={noticia.urlImagen} 
+                                descripcion={noticia.descripcion}
+                                fecha={noticia.fecha}
+                                fuente={noticia.fuente}
+                                titulo={noticia.titulo}
+                                url={noticia.url}
+                                urlImagen={noticia.urlImagen}
                                 actualizado={verificar}
                             />
                         );
@@ -199,6 +210,7 @@ const Tablero = () => {
                 </div>
                 <div class="divider"></div>
                 <div className='block'>
+                    <h2>Descartadas</h2>
                     {noticiasDescartadas.map((noticia) => {
                         return (
                             <Card
@@ -206,12 +218,12 @@ const Tablero = () => {
                                 idEstatus={4}
                                 autor={noticia.autor}
                                 contenido={noticia.contenido}
-                                descripcion={noticia.descripcion} 
-                                fecha={noticia.fecha} 
-                                fuente={noticia.fuente} 
-                                titulo={noticia.titulo} 
-                                url={noticia.url} 
-                                urlImagen={noticia.urlImagen} 
+                                descripcion={noticia.descripcion}
+                                fecha={noticia.fecha}
+                                fuente={noticia.fuente}
+                                titulo={noticia.titulo}
+                                url={noticia.url}
+                                urlImagen={noticia.urlImagen}
                                 actualizado={verificar}
                             />
                         );
