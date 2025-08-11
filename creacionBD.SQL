@@ -35,7 +35,7 @@ insert into TiposDeNoticias(nombreTipoNoticia) values ('Completados');
 insert into TiposDeNoticias(nombreTipoNoticia) values ('Descartados');
 
 BEGIN
-   EXECUTE IMMEDIATE 'DROP TABLE Noticias CASCADE CONSTRAINTS';
+   EXECUTE IMMEDIATE 'DROP TABLE Noticia CASCADE CONSTRAINTS';
 EXCEPTION
    WHEN OTHERS THEN
       IF SQLCODE != -942 THEN -- -942 = no existe la tabla
@@ -44,16 +44,17 @@ EXCEPTION
 END;
 /
 
+
 CREATE TABLE Noticia (
    idNoticia numeric(7,0) GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-   autor VARCHAR2(100),
+   autor VARCHAR2(400),
    contenido VARCHAR2(4000 char),
-   descripcion VARCHAR2(100),
-   fecha date,
+   descripcion VARCHAR2(1000),
+   fecha VARCHAR2(25),
    fuente varchar2(100),
-   titulo VARCHAR2(100),
-   url VARCHAR2(100),
-   urlImagen VARCHAR2(100),
+   titulo VARCHAR2(1000),
+   url VARCHAR2(1000),
+   urlImagen VARCHAR2(1000),
    idTipo int,
    CONSTRAINT fk_tipoNoticia
         FOREIGN KEY (idTipo)
@@ -69,9 +70,10 @@ CREATE OR REPLACE PROCEDURE getNoticias (
 BEGIN
     OPEN p_resultado FOR
         SELECT idNoticia, autor, contenido, descripcion, fecha, fuente, titulo, url,urlImagen
-        FROM Noticia where idNoticia = p_idTipo;
+        FROM Noticia where idTipo = p_idTipo;
 END;
 /
+
 
 
 
@@ -102,7 +104,7 @@ CREATE OR REPLACE PROCEDURE insertNoticia (
     p_autor VARCHAR2,
     p_contenido VARCHAR2,
     p_descripcion VARCHAR2,
-    p_fecha date,
+    p_fecha VARCHAR2,
     p_fuente varchar2,
     p_titulo VARCHAR2,
     p_url VARCHAR2,
@@ -117,8 +119,8 @@ BEGIN
     WHERE url = p_url;
     
     IF v_count = 0 THEN
-    INSERT INTO Noticia(autor, contenido, descripcion, fecha, fuente, titulo, url, urlImagen)
-    VALUES (p_autor, p_contenido, p_descripcion, p_fecha, p_fuente, p_titulo, p_url, p_urlImagen);
+    INSERT INTO Noticia(autor, contenido, descripcion, fecha, fuente, titulo, url, urlImagen, idTipo)
+    VALUES (p_autor, p_contenido, p_descripcion, p_fecha, p_fuente, p_titulo, p_url, p_urlImagen, 1);
 
     p_resultado := SQL%ROWCOUNT; 
     COMMIT;
@@ -132,3 +134,4 @@ EXCEPTION
         ROLLBACK;
 END;
 /
+
