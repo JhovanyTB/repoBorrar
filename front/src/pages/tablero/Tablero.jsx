@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Divider } from 'primereact/divider';
+
 import '../../styles/Tablero.css';
+
+import { APIService } from '../../services/APIService';
 
 import Card from './Card';
 
@@ -10,15 +12,29 @@ const Tablero = () => {
     const [noticiasRevision, setNoticiasRevision] = useState([]);
     const [noticiasCompletadas, setNoticiasCompletadas] = useState([]);
     const [noticiasDescartadas, setNoticiasDescartadas] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    const fetchNoticias = async () => {
+        const api = new APIService();
+        try {
+            const data = await api.consultaNoticias();
+            setNoticias(data);
+            console.log(data);
+        } catch (err) {
+            setError('Error al cargar noticias');
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        setNoticias([
-            {
-                titulo: "noti1",
-                fecha: "10/08/2025",
-            },
-        ]);
+        fetchNoticias();
     }, []);
+
+    if (loading) return <p>Cargando noticias...</p>;
+    if (error) return <p>{error}</p>;
 
     return (
         <>
@@ -31,6 +47,7 @@ const Tablero = () => {
                     <Card
                         titulo="Noticia 1"
                         fecha="10 de agosto de 2025"
+                        contenido="tralalero tralala"
                     />
                     <Card
                         titulo="Noticia 1"
